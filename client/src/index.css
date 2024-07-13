@@ -482,6 +482,7 @@ main {
   align-items: center;
   background-color: #264233;
   padding: 0.5em;
+  
 
   & > .login-header-icons {
     & > :nth-child(1),
@@ -489,22 +490,34 @@ main {
       width: 4rem;
     }
 
+    & > ul > #piie-logo {
+      width: 5rem;
+    }
+
     & > :nth-child(2) > img {
       width: 15em;
     }
+    
   }
 }
+
+
 
 .login-main {
   /* display: flex;
   justify-content: center;
   align-items: center; */
-  padding-top: 17rem;
+  /* padding-top: 17rem; */
+  
 
   & > section > div > h1 {
     font-size: 4rem;
     text-align: center;
   }
+}
+
+.index-bg {
+  z-index: -1;
 }
 
 .login-form-div {
@@ -577,5 +590,14 @@ main {
     .right-sidebar {
       display: none;
     }
+  }
+}
+
+@media (max-width: 820px) {
+  .login-header-icons {
+    display: flex;
+    justify-content: left;
+    
+    
   }
 }

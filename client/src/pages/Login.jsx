@@ -3,6 +3,13 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 // import { refreshAccessToken } from "../authService";
 import axios from "axios";
+import {
+  PIIELOGOCROPPED,
+  IECONNECNEWPNG,
+  PUPLOGOPNG,
+  BACKGROUND
+} from "../assets/index";
+
 
 const Login = () => {
   const { setIsAuthenticated } = useContext(AuthContext);
@@ -43,32 +50,41 @@ const Login = () => {
     <>
       {/*bulletin_icons bulletin-header*/}
       <header className=" | login-header">
-        <ul className=" | login-header-icons">
-          <img src="../assets/piie-logo-cropped.png" alt="" />
+        <ul className=" | login-header-icons flex items-center w-full justify-between">
+          <img id="piie-logo" src={PIIELOGOCROPPED} alt="" />
 
           <span>
-            <img src="../assets/ie-connect-new.png" alt="" />
+            <img src={IECONNECNEWPNG} alt="" />
           </span>
 
           <a href="https://www.pup.edu.ph/">
-            <img src="../assets/pup-logo.png" alt="" />
+            <img src={PUPLOGOPNG} alt="" />
           </a>
         </ul>
       </header>
       <main className="login-main">
         <section>
           <div>
-            <h1>Connect, Network, and Inspire</h1>
+            <img className="w-full brightness-100 index-bg absolute" src={BACKGROUND} alt="" />
           </div>
-          <div className="login-form-div">
+          
+          <div className="pt-15">
+            <h1 className="font-bold text-lime-950"><span className="text-green-900">Connect, Network,</span> and Inspire</h1>
+          </div>
+          <div className="login-form-div bg-white">
+            <p className="text-xs font-medium">Email or phone</p>
             <form onSubmit={handleLogin}>
               <input
-                className="login-input"
+                className="login-input mt-5"
                 type="text"
                 placeholder="Username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
               />
+
+
+
+              <p className="text-xs font-medium">Password</p>            
               <input
                 className="login-input"
                 type="password"
@@ -76,14 +92,15 @@ const Login = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
-              <p>Forgot Password?</p>
-              <button type="submit">Sign in</button>
+              
+              <p className="text-sm text-center text-green-900 font-bold">Forgot Password?</p>
+              <button type="submit" className="btn bg-green-900 text-white">Sign in</button>
               <div className="registration-link">
-                <p>Don&#39;t have an account?</p>
-                <NavLink to="/registration">Sign up</NavLink>
+                <p className="text-sm text-center">Don&#39;t have an account?</p>
+                <NavLink to="/registration" ><p className="text-center text-sm">Sign up</p></NavLink>
               </div>
             </form>
-          </div>
+          </div>  
           <footer>
             <div>
               <p>admin</p>

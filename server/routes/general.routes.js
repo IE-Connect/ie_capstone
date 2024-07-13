@@ -17,7 +17,7 @@ import { refreshTokenMiddleware } from "../middleware/refreshTokenController.js"
 import userProfilesSchema from "../collection_models/userProfilesSchema.js";
 
 const JSON_SECRET = process.env.JSON_SECRET_KEY;
-const JSON_REFRESH_SECRET = process.env.JSON_REFRESH_TOKEN;
+// const JSON_REFRESH_SECRET = process.env.JSON_REFRESH_TOKEN;
 
 // CLOUDINARY CONFIGURATION
 cloudinary.config({
@@ -73,29 +73,35 @@ router.route("/registration").post(async (req, res) => {
       surname,
       age,
       birthday,
-      contact,
+      contact, 
       email,
       username,
       password,
       batch,
     } = req.body;
-    // const file = req.file;
+
+
+    if (!password || !firstname ||!middlename || !surname || !age  || !birthday || !contact ||
+      !email || !username || !batch ) {
+      console.log("Please complete all the field")
+      return
+    }
+
+
     const name = `${firstname} ${middlename} ${surname}`;
     const duplicate = await Users.findOne({ username }).lean().exec();
     if (duplicate) {
       return res.status(400).json({ message: "Duplicate username" });
     }
 
+
     const saltRounds = 10;
     const hashedPass = await bcrypt.hash(password, saltRounds);
 
-    // console.log(body);
-    // console.log(file.path);
-    // const photoUrl = await cloudinary.uploader.upload(file.path);
+
     const Birthdate = new Date(birthday);
     tokenGenerator(result._id, res, JSON_SECRET);
     const newProfile = await Users.create({
-      // photopic: photoUrl.secure_url,
       name,
       age,
       birthday: Birthdate,
@@ -106,35 +112,11 @@ router.route("/registration").post(async (req, res) => {
       batch,
     });
     newProfile.save();
-    // console.log(photoUrl.secure_url);
     res.status(201).json({ success: true, message: "Profile saved!" });
   } catch (error) {
     console.error(error.message);
   }
-  // try {
-  //   const duplicate = await Users.findOne({ username }).lean().exec();
-  //   if (duplicate) {
-  //     return res.status(400).json({ message: "Duplicate username" });
-  //   }
-
-  //   const saltRounds = 10;
-  //   const hashedPass = await bcrypt.hash(password, saltRounds);
-  //   const registeredUser = await Users.create({
-  //     name: name,
-  //     email: email,
-  //     batch: batch,
-  //     username: username,
-  //     password: hashedPass,
-  //   });
-
-  //   await registeredUser.save();
-
-  //   res
-  //     .status(201)
-  //     .json({ success: true, message: "User created successfully!" });
-  // } catch (err) {
-  //   res.json({ success: false, error: err.message });
-  // }
+ 
 });
 
 // LOGIN POST ENDPOINT
@@ -153,15 +135,7 @@ router.route("/login").post(async (req, res) => {
       return res.status(401).json({ message: "Invalid password" });
     }
 
-    // const token = jwt.sign({ userId: result._id }, JSON_REFRESH_SECRET, {
-    //   expiresIn: "1d",
-    // });
-    // res.cookie("token", token, {
-    //   httpOnly: true,
-    //   secure: process.env.NODE_ENV === "production",
-    //   sameSite: "Strict",
-    //   maxAge: 15 * 24 * 60 * 60 * 1000,
-    // });
+
     tokenGenerator(result._id, res, JSON_SECRET);
     res.status(200).json({
       success: true,

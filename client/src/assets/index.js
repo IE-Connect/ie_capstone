@@ -5,6 +5,8 @@ import BULLETINICON from "./bulletin-icon.png";
 import PEOPLEICONPNG from "./people-icon.png";
 import PROFILEICONPNG from "./profile-icon.png";
 import JOBSICONPNG from "./jobs-icon.png";
+import BACKGROUND from "./piie_background.png";
+
 
 export {
   PIIELOGOCROPPED,
@@ -14,4 +16,5 @@ export {
   PEOPLEICONPNG,
   PROFILEICONPNG,
   JOBSICONPNG,
+  BACKGROUND
 };
